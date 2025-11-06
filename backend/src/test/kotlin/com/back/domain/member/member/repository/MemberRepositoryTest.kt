@@ -65,4 +65,5 @@ class MemberRepositoryTest {
         assertThat(member.username).isEqualTo("user1")
         assertThat(member.nickname).isEqualTo("유저1")
     }
+
 }
