@@ -16,7 +16,7 @@ class Member(
     var nickname: String,
     @Column(unique = true)
     var apiKey: String,
-    var profileImgUrl: String?
+    var profileImgUrl: String?,
 ) : BaseEntity(id) {
 
     constructor(username: String, password: String, nickname: String, profileImgUrl: String?) : this(
