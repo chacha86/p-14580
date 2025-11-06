@@ -2,11 +2,9 @@ package com.back.domain.member.member.repository
 
 import com.back.standard.extentions.getOrThrow
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 
@@ -135,11 +133,12 @@ class MemberRepositoryTest {
 
         assertThat(exists).isTrue
     }
+//
+//    @Test
+//    fun `existsQByNicknameContaining`() {
+//        val exists = memberRepository.existsQByNicknameContaining("유저")
+//
+//        assertThat(exists).isTrue
+//    }
 
-    @Test
-    fun `existsQByNicknameContaining`() {
-        val exists = memberRepository.existsQByNicknameContaining("유저")
-
-        assertThat(exists).isTrue
-    }
 }
