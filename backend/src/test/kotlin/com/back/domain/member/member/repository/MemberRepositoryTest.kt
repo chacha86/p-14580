@@ -81,18 +81,18 @@ class MemberRepositoryTest {
     @Test
     fun `findCByUsernameAndEitherPasswordOrNickname`() {
         // select * from member where username = ? and (password = ? or nickname = ?)
-        val members = memberRepository.findCByUsernameAndEitherPasswordOrNickname("admin", "wrong-password", "관리자")
+        val members = memberRepository.findCByUsernameAndEitherPasswordOrNickname("admin", "wrong-password", "운영자")
 
         assertThat(members).isNotEmpty
-        assertThat(members.any { it.username == "admin" && (it.password == "wrong-password" || it.nickname == "관리자") }).isTrue
+        assertThat(members.any { it.username == "admin" && (it.password == "wrong-password" || it.nickname == "운영자") }).isTrue
     }
 
     @Test
     fun `findQByUsernameAndPasswordOrNickname`() {
         // select * from member where username = ? and (password = ? or nickname = ?)
-        val members = memberRepository.findQByUsernameAndEitherPasswordOrNickname("admin", "wrong-password", "관리자")
+        val members = memberRepository.findQByUsernameAndEitherPasswordOrNickname("admin", "wrong-password", "운영자")
 
         assertThat(members).isNotEmpty
-        assertThat(members.any { it.username == "admin" && (it.password == "wrong-password" || it.nickname == "관리자") }).isTrue
+        assertThat(members.any { it.username == "admin" && (it.password == "wrong-password" || it.nickname == "운영자") }).isTrue
     }
 }

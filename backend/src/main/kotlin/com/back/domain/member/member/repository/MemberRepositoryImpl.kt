@@ -6,7 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 
 class MemberRepositoryImpl(
     private val jpaQuery: JPAQueryFactory
-): MemberRepositoryCustom {
+) : MemberRepositoryCustom {
 
     override fun findQById(id: Long): Member? {
         val member = QMember.member
@@ -55,6 +55,25 @@ class MemberRepositoryImpl(
             .where(
                 member.username.eq(username)
                     .or(member.nickname.eq(nickname))
+            )
+            .fetch()
+    }
+
+    override fun findQByUsernameAndEitherPasswordOrNickname(
+        username: String,
+        password: String,
+        nickname: String
+    ): List<Member> {
+        val member = QMember.member
+
+        return jpaQuery
+            .selectFrom(member)
+            .where(
+                member.username.eq(username)
+                    .and(
+                        member.password.eq(password)
+                            .or(member.nickname.eq(nickname))
+                    )
             )
             .fetch()
     }
