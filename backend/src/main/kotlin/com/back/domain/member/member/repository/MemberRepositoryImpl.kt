@@ -26,4 +26,13 @@ class MemberRepositoryImpl(
             .fetchOne()
     }
 
+    override fun findQByIdIn(ids: List<Long>): List<Member> {
+        val member = QMember.member
+
+        return jpaQuery
+            .selectFrom(member)
+            .where(member.id.`in`(ids))
+            .fetch()
+    }
+
 }
