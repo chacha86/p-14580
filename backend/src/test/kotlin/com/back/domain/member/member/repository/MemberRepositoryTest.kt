@@ -2,6 +2,7 @@ package com.back.domain.member.member.repository
 
 import com.back.standard.extentions.getOrThrow
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -183,6 +184,37 @@ class MemberRepositoryTest {
 
         for (i in 0 until members.size - 1) {
             assertThat(members[i].id).isGreaterThan(members[i + 1].id)
+        }
+    }
+
+    @Test
+    fun `findByUsernameContaining with Pageable`() {
+
+        val pageable = PageRequest.of(
+            0, 2,
+            Sort.by("id").descending()
+                .and(Sort.by("username").ascending())
+                .and(Sort.by("nickname").descending())
+        )
+        val page = memberRepository.findByUsernameContaining("user", pageable)
+
+        for (i in 0 until page.content.size - 1) {
+            assertThat(page.content[i].id).isGreaterThan(page.content[i + 1].id)
+        }
+    }
+
+    @Test
+    fun `findQByUsernameContaining with Pageable`() {
+        val pageable = PageRequest.of(
+            0, 2,
+            Sort.by("id").descending()
+                .and(Sort.by("username").ascending())
+                .and(Sort.by("nickname").descending())
+        )
+        val page = memberRepository.findQByUsernameContaining("user", pageable)
+
+        for (i in 0 until page.content.size - 1) {
+            assertThat(page.content[i].id).isGreaterThan(page.content[i + 1].id)
         }
     }
 }
