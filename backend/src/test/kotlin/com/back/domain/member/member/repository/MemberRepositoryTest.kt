@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
 
@@ -141,4 +142,23 @@ class MemberRepositoryTest {
         assertThat(exists).isTrue
     }
 
+    @Test
+    fun `findByNicknameContaining with Pageable`() {
+        val pageable = PageRequest.of(0, 2)
+        val page = memberRepository.findByNicknameContaining("유저", pageable)
+
+        assertThat(page.content).hasSize(2)
+        assertThat(page.totalElements).isEqualTo(3)
+        assertThat(page.totalPages).isEqualTo(2)
+    }
+
+    @Test
+    fun `findQByNicknameContaining with Pageable`() {
+        val pageable = PageRequest.of(0, 2)
+        val page = memberRepository.findQByNicknameContaining("유저", pageable)
+
+        assertThat(page.content).hasSize(2)
+        assertThat(page.totalElements).isEqualTo(3)
+        assertThat(page.totalPages).isEqualTo(2)
+    }
 }
