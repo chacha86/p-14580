@@ -28,7 +28,7 @@ class ApiV1AdmMemberController(
 
         val members = memberService.findByPaged(page, pageSize)
 
-        return memberService.findAll()
+        return members
             .map { MemberWithUsernameDto(it) }
     }
 }
