@@ -21,5 +21,5 @@ interface MemberRepositoryCustom {
 
     fun findQByUsernameContaining(username: String, pageable: Pageable): Page<Member>
 
-    fun findByKwPaged(kw: String, page: Pageable): Page<Member>
+    fun findByKwPaged(kwType:String, kw: String, page: Pageable): Page<Member>
 }
