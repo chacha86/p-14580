@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -17,7 +18,13 @@ class ApiV1AdmMemberController(
     @Operation(summary = "회원 다건 조회")
     @Transactional(readOnly = true)
     @GetMapping
-    fun getItems(): List<MemberWithUsernameDto> {
+    fun getItems(
+        @RequestParam("page", defaultValue = "0") page: Int,
+        @RequestParam("pageSize", defaultValue = "5") pageSize: Int,
+    ): List<MemberWithUsernameDto> {
+
+        val members = memberService.findByPaged(page, pageSize)
+
         return memberService.findAll()
             .map { MemberWithUsernameDto(it) }
     }

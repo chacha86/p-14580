@@ -176,8 +176,6 @@ class MemberRepositoryImpl(
                 .where(member.nickname.contains(username))
                 .fetchOne() ?: 0L
         }
-
-
     }
 
 }
