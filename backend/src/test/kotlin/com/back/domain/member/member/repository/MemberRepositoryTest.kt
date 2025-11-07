@@ -2,6 +2,7 @@ package com.back.domain.member.member.repository
 
 import com.back.standard.extentions.getOrThrow
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -162,4 +163,27 @@ class MemberRepositoryTest {
         assertThat(page.totalPages).isEqualTo(2)
     }
 
+    @Test
+    fun `findByNicknameContainingOrderByIdDesc`() {
+        val members = memberRepository.findByNicknameContainingOrderByIdDesc("유저")
+
+        assertThat(members).isNotEmpty
+        assertThat(members.all { it.nickname.contains("유저") }).isTrue
+
+        for (i in 0 until members.size - 1) {
+            assertThat(members[i].id).isGreaterThan(members[i + 1].id)
+        }
+    }
+
+    @Test
+    fun `findQByNicknameContainingOrderByIdDesc`() {
+        val members = memberRepository.findQByNicknameContainingOrderByIdDesc("유저")
+
+        assertThat(members).isNotEmpty
+        assertThat(members.all { it.nickname.contains("유저") }).isTrue
+
+        for (i in 0 until members.size - 1) {
+            assertThat(members[i].id).isGreaterThan(members[i + 1].id)
+        }
+    }
 }
