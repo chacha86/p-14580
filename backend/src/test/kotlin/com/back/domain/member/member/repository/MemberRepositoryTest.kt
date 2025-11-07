@@ -119,14 +119,14 @@ class MemberRepositoryTest {
     fun `countByNicknameContaining`() {
         val count = memberRepository.countByNicknameContaining("유저")
 
-        assertThat(count).isEqualTo(3)
+        assertThat(count).isEqualTo(6)
     }
 
     @Test
     fun `countQByNicknameContaining`() {
         val count = memberRepository.countQByNicknameContaining("유저")
 
-        assertThat(count).isEqualTo(3)
+        assertThat(count).isEqualTo(6)
     }
 
     @Test
@@ -149,8 +149,8 @@ class MemberRepositoryTest {
         val page = memberRepository.findByNicknameContaining("유저", pageable)
 
         assertThat(page.content).hasSize(2)
-        assertThat(page.totalElements).isEqualTo(3)
-        assertThat(page.totalPages).isEqualTo(2)
+        assertThat(page.totalElements).isEqualTo(6)
+        assertThat(page.totalPages).isEqualTo(3)
     }
 
     @Test
@@ -159,8 +159,8 @@ class MemberRepositoryTest {
         val page = memberRepository.findQByNicknameContaining("유저", pageable)
 
         assertThat(page.content).hasSize(2)
-        assertThat(page.totalElements).isEqualTo(3)
-        assertThat(page.totalPages).isEqualTo(2)
+        assertThat(page.totalElements).isEqualTo(6)
+        assertThat(page.totalPages).isEqualTo(3)
     }
 
     @Test
