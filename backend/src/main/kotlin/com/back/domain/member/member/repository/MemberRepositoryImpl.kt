@@ -3,6 +3,7 @@ package com.back.domain.member.member.repository
 import com.back.domain.member.member.entity.Member
 import com.back.domain.member.member.entity.QMember
 import com.back.standard.enum.MemberSearchKeywordType
+import com.back.standard.enum.MemberSearchSortType
 import com.querydsl.core.BooleanBuilder
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
@@ -185,7 +186,7 @@ class MemberRepositoryImpl(
         val member = QMember.member
 
         val builder = BooleanBuilder()?.apply {
-            when(kwType) {
+            when (kwType) {
                 MemberSearchKeywordType.USERNAME -> this.and(member.username.contains(kw))
                 MemberSearchKeywordType.NICKNAME -> this.and(member.nickname.contains(kw))
                 MemberSearchKeywordType.ALL -> {
@@ -198,9 +199,18 @@ class MemberRepositoryImpl(
             }
         }
 
+
         val query = jpaQuery
             .selectFrom(member)
             .where(builder)
+
+        pageable.sort.forEach { order ->
+            when (order.property.lowercase()) {
+                MemberSearchSortType.ID.property -> query.orderBy(if (order.isAscending) member.id.asc() else member.id.desc())
+                MemberSearchSortType.USERNAME.property -> query.orderBy(if (order.isAscending) member.username.asc() else member.username.desc())
+                MemberSearchSortType.NICKNAME.property -> query.orderBy(if (order.isAscending) member.nickname.asc() else member.nickname.desc())
+            }
+        }
 
         val content = query
             .offset(pageable.offset)
