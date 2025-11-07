@@ -19,9 +19,12 @@ class ApiV1AdmMemberController(
     @Transactional(readOnly = true)
     @GetMapping
     fun getItems(
-        @RequestParam("page", defaultValue = "0") page: Int,
+        @RequestParam("page", defaultValue = "1") page: Int,
         @RequestParam("pageSize", defaultValue = "5") pageSize: Int,
     ): List<MemberWithUsernameDto> {
+
+        val page = if (page >= 1) page else 1
+        val pageSize = if (pageSize > 30) 30 else pageSize
 
         val members = memberService.findByPaged(page, pageSize)
 

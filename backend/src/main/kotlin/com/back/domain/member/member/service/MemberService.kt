@@ -69,7 +69,7 @@ class MemberService(
         }
     }
 
-    fun findByPaged(page: Int, pageSize: Int): Page<Member> {
-
+    fun findByPaged(page: Int, pageSize: Int): Page<Member>? {
+        return null
     }
 }
