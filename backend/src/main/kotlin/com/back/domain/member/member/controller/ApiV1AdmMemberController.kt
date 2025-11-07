@@ -22,12 +22,13 @@ class ApiV1AdmMemberController(
     fun getItems(
         @RequestParam("page", defaultValue = "1") page: Int,
         @RequestParam("pageSize", defaultValue = "5") pageSize: Int,
+        @RequestParam("kw", defaultValue = "") kw: String,
     ): PageDto<MemberWithUsernameDto> {
 
         val page = if (page >= 1) page else 1
         val pageSize = if (pageSize > 30) 30 else pageSize
 
-        val memberPage = memberService.findByPaged(page, pageSize)
+        val memberPage = memberService.findByKwPaged(page, pageSize, kw)
 
         return PageDto(memberPage.map { MemberWithUsernameDto(it) })
     }

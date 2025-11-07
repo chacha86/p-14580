@@ -2,6 +2,7 @@ package com.back.domain.member.member.repository
 
 import com.back.domain.member.member.entity.Member
 import com.back.domain.member.member.entity.QMember
+import com.querydsl.core.BooleanBuilder
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -174,6 +175,32 @@ class MemberRepositoryImpl(
                 .select(member.count())
                 .from(member)
                 .where(member.nickname.contains(username))
+                .fetchOne() ?: 0L
+        }
+    }
+
+    override fun findByKwPaged(kw: String, pageable: Pageable): Page<Member> {
+
+        val member = QMember.member
+
+        val builder = BooleanBuilder()?.apply {
+            this.and(member.nickname.contains(kw))
+        }
+
+        val query = jpaQuery
+            .selectFrom(member)
+            .where(builder)
+
+        val content = query
+            .offset(pageable.offset)
+            .limit(pageable.pageSize.toLong())
+            .fetch()
+
+        return PageableExecutionUtils.getPage(content, pageable) {
+            jpaQuery
+                .select(member.count())
+                .from(member)
+                .where(builder)
                 .fetchOne() ?: 0L
         }
     }

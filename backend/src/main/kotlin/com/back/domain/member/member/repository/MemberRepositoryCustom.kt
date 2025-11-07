@@ -20,4 +20,6 @@ interface MemberRepositoryCustom {
     fun existsQByNicknameContaining(nickname: String): Boolean
 
     fun findQByUsernameContaining(username: String, pageable: Pageable): Page<Member>
+
+    fun findByKwPaged(kw: String, page: Pageable): Page<Member>
 }

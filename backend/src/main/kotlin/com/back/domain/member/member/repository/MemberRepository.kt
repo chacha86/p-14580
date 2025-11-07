@@ -25,5 +25,4 @@ interface MemberRepository : JpaRepository<Member, Long>, MemberRepositoryCustom
     fun existsByNicknameContaining(nickname: String): Boolean
 
     fun findByUsernameContaining(username: String, pageable: Pageable): Page<Member>
-
 }
