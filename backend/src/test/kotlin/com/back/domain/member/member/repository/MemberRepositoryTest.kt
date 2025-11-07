@@ -161,4 +161,5 @@ class MemberRepositoryTest {
         assertThat(page.totalElements).isEqualTo(3)
         assertThat(page.totalPages).isEqualTo(2)
     }
+
 }

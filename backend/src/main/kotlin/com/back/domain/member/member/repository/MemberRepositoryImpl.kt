@@ -4,8 +4,8 @@ import com.back.domain.member.member.entity.Member
 import com.back.domain.member.member.entity.QMember
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
+import org.springframework.data.support.PageableExecutionUtils
 
 class MemberRepositoryImpl(
     private val jpaQuery: JPAQueryFactory
@@ -121,24 +121,19 @@ class MemberRepositoryImpl(
         val member = QMember.member
 
         // content 쿼리
-        val result = jpaQuery
+        val content = jpaQuery
             .selectFrom(member)
             .where(member.nickname.contains(nickname))
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
             .fetch()
 
-        // totalCount 쿼리
-        val totalCount = jpaQuery
-            .select(member.count())
-            .from(member)
-            .where(member.nickname.contains(nickname))
-            .fetchOne() ?: 0L
-
-        return PageImpl(
-            result,
-            pageable,
-            totalCount
-        )
+        return PageableExecutionUtils.getPage(content, pageable) {
+            jpaQuery
+                .select(member.count())
+                .from(member)
+                .where(member.nickname.contains(nickname))
+                .fetchOne() ?: 0L
+        }
     }
 }
