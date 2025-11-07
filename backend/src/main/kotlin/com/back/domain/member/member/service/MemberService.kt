@@ -3,6 +3,7 @@ package com.back.domain.member.member.service
 import com.back.domain.member.member.entity.Member
 import com.back.domain.member.member.repository.MemberRepository
 import com.back.global.exception.ServiceException
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -69,11 +70,11 @@ class MemberService(
         }
     }
 
-    fun findByPaged(page: Int, pageSize: Int): List<Member> {
+    fun findByPaged(page: Int, pageSize: Int): Page<Member> {
 
         val pageable = PageRequest.of(page - 1, pageSize)
         val page = memberRepository.findAll(pageable)
 
-        return page.content
+        return page
     }
 }
