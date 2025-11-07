@@ -100,4 +100,16 @@ class MemberRepositoryImpl(
             )
             .fetchOne() ?: 0L
     }
+
+    override fun existsQByNicknameContaining(nickname: String): Boolean {
+        val member = QMember.member
+
+        return jpaQuery
+            .selectOne()
+            .from(member)
+            .where(
+                member.nickname.contains(nickname)
+            )
+            .fetchFirst() != null
+    }
 }

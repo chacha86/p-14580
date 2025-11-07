@@ -133,12 +133,12 @@ class MemberRepositoryTest {
 
         assertThat(exists).isTrue
     }
-//
-//    @Test
-//    fun `existsQByNicknameContaining`() {
-//        val exists = memberRepository.existsQByNicknameContaining("유저")
-//
-//        assertThat(exists).isTrue
-//    }
+
+    @Test
+    fun `existsQByNicknameContaining`() {
+        val exists = memberRepository.existsQByNicknameContaining("유저")
+
+        assertThat(exists).isTrue
+    }
 
 }
